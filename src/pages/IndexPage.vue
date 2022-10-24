@@ -11,7 +11,7 @@
             Since MIDI files are binary, we need to convert them to a more
             accessible format for JavaScript such as JSON as it is this frontend
             that is going to convert it back to a compact binary format for the
-            FPGA.
+            FPGA. You can also play the MIDI file here thanks to Tone.js!
           </div>
           <br />
           <Editor
@@ -66,8 +66,15 @@
           <div class="text-overline">Step 2</div>
           <div class="text-h5 q-mt-sm q-mb-xs">Verilog Code Generation</div>
           <div class="text-caption text-grey">
-            What is the baes clock frequency? Please enter the information on
-            the side input field and click generate.
+            What is the baes clock frequency? What should be the main note unit?
+            Should we override the beats per minute? Should we override all note
+            duration to give them a punch? Please enter the information on the
+            side input field and click generate. The track encoding format is
+            simple: every track is an array of bytes. If the value of the byte
+            is less than 128, then the byte is an actual MIDI note that will
+            play for unit time. However, if it is larger, the byte is a pause.
+            The following 7 bytes determines how unit of time to pause on the
+            track. This pretty much it!
           </div>
           <Editor
             height="50vh"
@@ -78,7 +85,7 @@
           />
         </q-card-section>
 
-        <q-card-section class="flex flex-center">
+        <q-card-section class="flex flex-center col-3">
           <q-form @submit="generate" class="q-gutter-md">
             <q-input
               filled
